@@ -46,3 +46,20 @@ class MyClass {
 }
 
 const newInstance = new MyObj(5);
+
+const outer = {
+  func1: function() {
+    console.log(this);
+    _this = this;
+
+    const func2 = function() {
+      console.log(_this);
+
+      const func3 = function() {
+        console.log(_this);
+      }();
+    }();
+  }
+}
+
+outer.func1();
