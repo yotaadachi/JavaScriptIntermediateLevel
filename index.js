@@ -1,33 +1,58 @@
-// console.log('%c[JavaScript]call, apply, bindの使い方'
-//   , 'color:red; font-size: 1.5em');
+console.log('%c[JavaScript]アロー関数について学ぼう'
+  , 'color:red; font-size: 1.5em');
 
-// // 関数が定義された時点でthisの参照先は決まっていない。
-// function greet() {
-//   console.log(arguments);
-//   let slicedArray = [].slice.call(arguments, 0, 1);
-//   console.log(slicedArray);
+const timesTwo = i => i * 2;
 
-//   //let hi = `Hi, ${this.name}`;
-//   //console.log(hi);
-// }
+const res = timesTwo(2);
+// console.log(res)
 
-// let obj = {name: "Tom"};
+/**
+ * 書き方(syntax)について
+ */
+let arrowFn;
 
-// // callは第一引数でthisの参照先を定義できる。
-// greet.apply(obj, [1,2,3]);
+// 引数がない場合、必ずカッコを記載する必要がある。
+arrowFn = () => 42;
 
-// const arry = [1,2,3,4];
-// console.log(Math.min.apply(null, arry));
+// 引数が1つの場合は、カッコが省略することができる。(カッコありでも問題なし)
+arrowFn = x => 42;
+arrowFn = (x) => 42;
 
-let myObj = {
-  id: 42,
-  print() {
-    console.log(this);
+// 引数が2つ以上の場合は、カッコを記載する必要がある。
+arrowFn = (x, y) => 42;
 
-    setTimeout(() => {
+// return行以外の処理がある場合、波カッコを記載する必要がある。
+arrowFn = (x, y) => {
+  console.log(x + y);
+  return x + y;
+}
+// arrowFn(1, 2);
+
+/**
+ * thisのバインドについて
+ */
+let normalFn;
+normalFn = {
+  id: 43,
+  counter: function() {
+    console.log(this.id);
+
+    window.setTimeout(() => {
       console.log(this.id);
     }, 1000);
   }
-}
+};
+normalFn.counter();
 
-myObj.print();
+window.me = 'global';
+const outer = function() {
+  let me = 'outer' // lexical scope
+
+  return {
+    me: 'inner',
+    say: () => {
+      console.log(this.me);
+    }
+  }
+}
+outer().say();
