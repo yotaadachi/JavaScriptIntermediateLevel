@@ -1,58 +1,47 @@
-console.log('%c[JavaScript]アロー関数について学ぼう'
+console.log('%c[JavaScript]クロージャーについて学ぼう'
   , 'color:red; font-size: 1.5em');
 
-const timesTwo = i => i * 2;
-
-const res = timesTwo(2);
-// console.log(res)
-
 /**
- * 書き方(syntax)について
+ * クロージャーの定義
+ * クロージャーとは、関数と、その関数が宣言された
+ * レキシカルスコープの組み合わせ。
  */
-let arrowFn;
 
-// 引数がない場合、必ずカッコを記載する必要がある。
-arrowFn = () => 42;
+// let counter = 0;
+// increment(); // 1
+// increment(); // 2
+// counter = 0;
+// increment(); // 『3』と出力したいが、途中で変数の値が操作されてしまい、出力されない。
 
-// 引数が1つの場合は、カッコが省略することができる。(カッコありでも問題なし)
-arrowFn = x => 42;
-arrowFn = (x) => 42;
+// function increment() {
+//   counter++;
+//   console.log(counter);
+// }
 
-// 引数が2つ以上の場合は、カッコを記載する必要がある。
-arrowFn = (x, y) => 42;
+// let increment = (function () {
 
-// return行以外の処理がある場合、波カッコを記載する必要がある。
-arrowFn = (x, y) => {
-  console.log(x + y);
-  return x + y;
-}
-// arrowFn(1, 2);
+//   let counter = 0; // Lexical Scope
 
-/**
- * thisのバインドについて
- */
-let normalFn;
-normalFn = {
-  id: 43,
-  counter: function() {
-    console.log(this.id);
+//   return function() {
+//     counter += 1;
+//     console.log(counter);
+//   }
+// })();
 
-    window.setTimeout(() => {
-      console.log(this.id);
-    }, 1000);
+// increment();
+// increment();
+// increment();
+
+function addStringFactory(tail) {
+  function concat(str) {
+    return str + tail;
   }
-};
-normalFn.counter();
-
-window.me = 'global';
-const outer = function() {
-  let me = 'outer' // lexical scope
-
-  return {
-    me: 'inner',
-    say: () => {
-      console.log(this.me);
-    }
-  }
+  return concat;
 }
-outer().say();
+
+let addAs = addStringFactory(' AAAAA');
+let addBs = addStringFactory(' BBBBB');
+
+let str = 'Tom';
+str = addAs(str);
+console.log(str);
