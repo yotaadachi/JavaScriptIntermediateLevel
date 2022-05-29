@@ -1,17 +1,29 @@
-console.log('%c[JavaScript]タグ付きテンプレートリレラルを使ってみよう'
+console.log('%c[JavaScript]ループを使いこなそう'
   , 'color:red; font-size: 1.5em');
 
-function b(strings, ...values) {
-  console.log(strings);
-  console.log(values);
-  return strings.reduce((accu, str, i) => {
-    let val = values[i] ? `<b>${values[i]}</b>` : "";
-    console.log(`${accu}${str}${val}`);
-    return `${accu}${str}${val}`;
-  }, '');
+const data = [1 ,4, 2, 5, 3];
+const fruits = {
+  banana: 'バナナ',
+  apple: 'りんご',
+  orange: 'オレンジ'
 }
 
-const str1 = "Bob";
-const str2 = "Tom";
-const result = b`${str1} and ${str2}`;
-console.log(result);
+Object.prototype.additionalFn = function() {};
+
+let keyFruits = Object.keys(fruits);
+
+// for(let i = 0; i < keyFruits.length; i++) {
+//   console.log(i, fruits[keyFruits[i]]);
+// }
+
+// for(let i in fruits) {
+//   if(fruits.hasOwnProperty(i)){
+//     console.log(i, fruits[i]);
+//   }
+// }
+
+for(let i of keyFruits) {
+  if(fruits.hasOwnProperty(i)){
+    console.log(i, fruits[i]);
+  }
+}
