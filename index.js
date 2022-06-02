@@ -1,4 +1,4 @@
-console.log('%c[JavaScript]非同期操作について学ぼう2(Promise関数)'
+console.log('%c[JavaScript]非同期操作について学ぼう2(Await/Async関数)'
   , 'color:red; font-size: 1.5em');
 
 function wait(num) {
@@ -14,32 +14,23 @@ function wait(num) {
   });
 }
 
-Promise.all([wait(1000), wait(1500), wait(2000)]).then(nums => {
-  console.log(nums);
-});
+async function init() {
+  let num = 0;
+  try {
+    num = await wait(1000);
+    num++;
+    num = await wait(num);
+    num++;
+    num = await wait(num);
+    num++;
+    num = await wait(num);
+    num++;
+    num = await wait(num);
+    num++;
+  } catch(e) {
+    throw new Error('Error is occured', e);
+  }
+  return num;
+}
 
-// wait(1000).then(num => {
-//   num++;
-//   return wait(num);
-// }).then(num => {
-//   num++
-//   return wait(num);
-// }).then(num => {
-//   num++
-//   return wait(num);
-// }).then(num => {
-//   num++
-//   return wait(num);
-// }).catch(num => {
-//   console.error(num, 'error');
-// })
-// wait(num => {
-//   num++;
-//   wait(num => {
-//     num++
-//     wait(num => {
-//       num++
-
-//     }, num);
-//   }, num);
-// }, 0);
+init();
