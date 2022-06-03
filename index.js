@@ -1,36 +1,24 @@
-console.log('%c[JavaScript]非同期操作について学ぼう2(Await/Async関数)'
+console.log('%c[JavaScript]コンストラクタとプロパティ'
   , 'color:red; font-size: 1.5em');
 
-function wait(num) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log(num);
-      if(num === 1002) {
-        reject(num);
-      } else {
-        resolve(num);
-      }
-    }, num);
-  });
+function Person(first, last) {
+  this.first = first;
+  this.last = last;
+  // this.introduce = function() {
+  //   console.log('My name is ' + first + ' ' + last);
+  // }
 }
 
-async function init() {
-  let num = 0;
-  try {
-    num = await wait(1000);
-    num++;
-    num = await wait(num);
-    num++;
-    num = await wait(num);
-    num++;
-    num = await wait(num);
-    num++;
-    num = await wait(num);
-    num++;
-  } catch(e) {
-    throw new Error('Error is occured', e);
-  }
-  return num;
+// prototypeの中で関数を作成する場合には、変数にthisをつける。
+Person.prototype.introduce = function() {
+  console.log('My name is ' + this.first + ' ' + this.last);
 }
 
-init();
+let me0 = new Person('First', 'Last');
+// me0.__proto__.introduce = function() {
+//   console.log("I don't want to introduce myself");
+// }
+me0.introduce();
+
+let me1 = new Person('Me1', 'Desu');
+me1.introduce();
