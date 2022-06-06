@@ -1,32 +1,27 @@
-console.log('%c[JavaScript]プロトタイプチェーンについて'
+console.log('%c[JavaScript]プロトタイプと継承について'
   , 'color:red; font-size: 1.5em');
 
-function Person(first, last) {
+function Person(first, last, age) {
   this.first = first;
   this.last = last;
-  // this.introduce = function() {
-  //   console.log('My name is ' + first + ' ' + last);
-  // }
 }
 
-// 下記がコメントアウトされると、Objectのprototypeが参照される。
-// Person.prototype.introduce = function() {
-//   console.log('My name is ' + this.first + ' ' + this.last);
-// }
-
-Object.prototype.introduce = function() {
-  console.log('Object My name is ' + this.first + ' ' + this.last);
+function Japanese(first, last) {
+  Person.call(this, first, last);
+  this.lang = 'ja';
 }
 
-let me0 = new Person('First', 'Last');
-// me0.__proto__.introduce = function() {
-//   console.log("I don't want to introduce myself");
-// }
+// prototypeの継承
+Object.setPrototypeOf(Japanese.prototype, Person.prototype);
 
-// 下記がコメントアウトされると、Personのコンストラクタのprototypeを参照しにいく。
-// me0.introduce = function() {
-//   console.log('Heeeeeello! My name is ' + this.first + ' ' + this.last);
-// }
-me0.introduce();
-// let me1 = new Person('Me1', 'Desu');
-// me1.introduce();
+Person.prototype.introduce = function() {
+  console.log('My name is ' + this.first + ' ' + this.last);
+};
+
+Japanese.prototype.sayJapanese = function() {
+  console.log('こんにちは ' + this.first + ' ' + this.last);
+}
+
+let me = new Japanese('First', 'Last');
+me.introduce();
+me.sayJapanese();
